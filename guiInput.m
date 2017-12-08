@@ -69,7 +69,7 @@ selected = 'Negro';
 tomada = false;
 cat = 1;
 
-url = 'http://10.210.37.101:8080/shot.jpg';
+url = getURL();
 
 while (1)
     ss  = imread(url);
