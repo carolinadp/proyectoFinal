@@ -82,7 +82,6 @@ function [img, fclas] = clasifica(f)
            end
         end
     end
-end
     
     for i=1:n
         for j=1:m
@@ -100,4 +99,3 @@ end
     C = imerode(A, B);
 
     [img, fclas] = applyMask(img, clasif, C);
-
