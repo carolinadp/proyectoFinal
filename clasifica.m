@@ -67,27 +67,41 @@ for i=1:n
     end
 end
 
+figure, imshow(img)
 
-% vec = [[0,1], [0,-1], [-1,0], [1,0]];
-% 
-% for i=1:n
-%     for j=1:m
-%        veces = zeros(14);
-%        if (clasif(i, j) == 0)
-%            for k=1:4
-%                x = i + vec(k,1);
-%                y = j + vec(k,2);
-%                if (clasif(x,y) > 0)
-%                    veces(clasif(x,y)) = veces(clasif(x,y)) + 1;
-%                end
-%            end
-%            mej = max(veces);
-%            if (mej > 0)
-%                for k=1:14
-%                    if veces(k) == mej
-%            end
-%        end
-%     end
-% end
+vec = [0,1
+    0,-1 
+    -1,0
+    1,0];
+
+for i=1:n
+    for j=1:m
+       veces = zeros(14,1);
+       if (clasif(i, j) == 0)
+           for k=1:4
+               x = i + vec(k,1);
+               y = j + vec(k,2);
+               if (x >= 1 && y >= 1 && x <= n && y <= m && clasif(x,y) > 0)
+                   veces(clasif(x,y)) = veces(clasif(x,y)) + 1;
+               end
+           end
+           may = max(veces);
+           mej = 0;
+           if (may > 0)
+               for k=1:14
+                   if veces(k) == may
+                       mej = k;
+                   end
+               end
+           end
+           
+           clasif(i,j) = mej;
+           if (mej > 0)
+               img(i,j,:) = colors(mej,:);
+           end
+           
+       end
+    end
+end
 
 figure,imshow (img)
