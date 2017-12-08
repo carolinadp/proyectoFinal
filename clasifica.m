@@ -68,26 +68,92 @@ for i=1:n
 end
 
 
-% vec = [[0,1], [0,-1], [-1,0], [1,0]];
-% 
-% for i=1:n
-%     for j=1:m
-%        veces = zeros(14);
-%        if (clasif(i, j) == 0)
-%            for k=1:4
-%                x = i + vec(k,1);
-%                y = j + vec(k,2);
-%                if (clasif(x,y) > 0)
-%                    veces(clasif(x,y)) = veces(clasif(x,y)) + 1;
-%                end
-%            end
-%            mej = max(veces);
-%            if (mej > 0)
-%                for k=1:14
-%                    if veces(k) == mej
-%            end
-%        end
-%     end
-% end
+vec = [0,1
+    0,-1 
+    -1,0
+    1,0];
 
-figure,imshow (img)
+for i=1:n
+    for j=1:m
+       veces = zeros(14,1);
+       if (clasif(i, j) == 0)
+           for k=1:4
+               x = i + vec(k,1);
+               y = j + vec(k,2);
+               if (x >= 1 && y >= 1 && x <= n && y <= m && clasif(x,y) > 0)
+                   veces(clasif(x,y)) = veces(clasif(x,y)) + 1;
+               end
+           end
+           may = max(veces);
+           mej = 0;
+           if (may > 0)
+               for k=1:14
+                   if veces(k) == may
+                       mej = k;
+                   end
+               end
+           end
+           
+           clasif(i,j) = mej;
+           if (mej > 0)
+               img(i,j,:) = colors(mej,:);
+           end
+           
+       end
+    end
+end
+
+A = bw(img, clasif);
+
+B = strel('disk',2);
+
+C = imerode(A, B);
+
+[img, fclas] = applyMask(img, clasif, C);
+
+bars = obtainBars(fclas);
+
+t = '';
+
+[ugh, b] = size(bars);
+
+% 1 - negro
+% 2 - cafe
+% 3 - rojo
+% 4 - naranja
+% 5 - amarillo
+% 6 - verde 
+% 7 - azul
+% 8 - violeta
+% 9 - gris
+% 10 - blanco
+% 11 - dorado
+% 12 - plata
+
+for i=1:b
+    temp = bars(i);
+    if (temp == 1)
+        t = strcat(t, 'Negro ');
+    elseif (temp == 2)
+        t = strcat(t, 'Cafe ');
+    elseif (temp == 3)
+        t = strcat(t, 'Rojo ');
+    elseif (temp == 4)
+        t = strcat(t, 'Naranja ');
+    elseif (temp == 5)
+        t = strcat(t, 'Amarillo ');
+    elseif (temp == 8)
+        t = strcat(t, 'Violeta ');
+    elseif (temp == 9)
+        t = strcat(t, 'Gris ');
+    elseif (temp == 10)
+        t = strcat(t, 'Blanco ');
+    elseif (temp == 11)
+        t = strcat('Dorado ');
+    elseif (temp == 12)
+        t = strcat('Plata ');
+    end
+end
+
+imshow(img);
+title(t);
