@@ -94,7 +94,7 @@ function [img, fclas] = clasifica(f)
 
     A = bw(img, clasif);
 
-    B = strel('disk',2);
+    B = strel('disk',3);
 
     C = imerode(A, B);
 

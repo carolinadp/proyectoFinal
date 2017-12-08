@@ -107,14 +107,15 @@ if (tomada)
         elseif (temp == 10)
             t = strcat(t, 'Blanco ');
         elseif (temp == 11)
-            t = strcat('Dorado ');
+            t = strcat(t, 'Dorado ');
         elseif (temp == 12)
-            t = strcat('Plata ');
+            t = strcat(t, 'Plata ');
         end
     end
     imwrite(ss, 'test.png');
 
     figure, imshow(img);
+    impixelinfo
     title(t);
     tomada = false;
 end
